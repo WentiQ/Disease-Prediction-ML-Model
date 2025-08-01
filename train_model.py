@@ -40,7 +40,7 @@ disease_to_index = {d: i for i, d in enumerate(diseases)}
 y_encoded = [disease_to_index[d] for d in y]
 
 # === Step 5: Train model ===
-model = RandomForestClassifier(n_estimators=600, random_state=42)
+model = RandomForestClassifier(n_estimators=100, random_state=42)
 model.fit(X, y_encoded)
 
 # === Step 6: Save model, labels, and symptom index ===
