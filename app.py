@@ -14,20 +14,25 @@ with open("symptom_to_index.json") as f:
 # === Create app ===
 app = FastAPI()
 
-# Enable frontend access (CORS)
+# === Add optional root endpoint (for browser view) ===
+@app.get("/")
+def home():
+    return {"message": "Lifeline AI backend is running!"}
+
+# === Enable frontend access (CORS) ===
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Change to your frontend domain in production
+    allow_origins=["*"],  # Change this in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Define request format
+# === Define request body ===
 class SymptomRequest(BaseModel):
     symptom_names: list[str]
 
-# === Predict endpoint ===
+# === Main prediction endpoint ===
 @app.post("/predict")
 def predict(request: SymptomRequest):
     input_vector = [0] * len(symptom_to_index)
